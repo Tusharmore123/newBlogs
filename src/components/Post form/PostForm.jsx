@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form'
-import Input  from '../Input'
+import Input  from '../input'
 import { service } from '../../../Appwrite/service'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCallback } from 'react'
 import RTE from './RTE'
-import Select from '../Select'
-import Button from '../Button'
+import Select from '../select'
+import Button from '../button'
 import { useSelector } from 'react-redux'
 
 function PostForm({ post }) {

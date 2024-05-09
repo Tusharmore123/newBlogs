@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { appwriteObj } from '../../Appwrite/auth';
 import { login } from '../Store/authSlice';
-import Input  from './Input';
-import Button from './Button';
+import Input  from './input';
+import Button from './button';
 import  Logo from './Logo';
 import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';

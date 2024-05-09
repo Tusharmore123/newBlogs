@@ -1,13 +1,13 @@
 import React,{useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Input from './Input';
+import Input from './input';
 import { login } from '../Store/authSlice';
 import Logo from './Logo';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { appwriteObj } from '../../Appwrite/auth';
 import { useForm } from 'react-hook-form';
-import Button from './Button';
+import Button from './button';
 
 function SignIn() {
   const [error,setError]=useState("");

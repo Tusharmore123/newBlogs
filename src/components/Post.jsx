@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import parse  from 'html-react-parser';
 import Container from '../container/Container';
 import {Link} from 'react-router-dom';
-import Button from './Button';
+import Button from './button';
 
 function Post() {
     const {slug}=useParams();
