@@ -2,16 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { service } from '../../Appwrite/service'
 
-
-
-
-function PostCard({$id,title,featuredImage,}) {
-  {console.log($id)}
-  return (
+function PostCard({$id,image,title}) {
+  return (  
     <Link to={`/post/${$id}`}>
-                <div className='w-full bg-gray-100 rounded-xl p-4'>
+      {console.log("image",image)}
+         <div className='w-full bg-gray-100 rounded-xl p-4'>
             <div className='w-full justify-center mb-4'>
-                <img src={service.getPreview(featuredImage)} alt={title}
+                <img src={service.getPreview(image)} alt={title}
                 className='rounded-xl' />
 
             </div>
@@ -19,8 +16,8 @@ function PostCard({$id,title,featuredImage,}) {
             className='text-xl font-bold'
             >{title}</h2>
         </div>
+    </Link>
     
-     </Link>
   )
 }
 

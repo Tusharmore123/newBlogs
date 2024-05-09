@@ -1,40 +1,45 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { logIn as authLogin } from '../store/authSlice'
-import { React, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import Logo from './logo'
-import { useForm } from 'react-hook-form'
-import { appwriteObj } from '../../Appwrite/auth'
-import Input from './Input'
-import Button from './Button'
+import React,{useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Input from './Input';
+import { login } from '../Store/authSlice';
+import Logo from './Logo';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { appwriteObj } from '../../Appwrite/auth';
+import { useForm } from 'react-hook-form';
+import Button from './Button';
 
 function SignIn() {
-    const [error, setError] = useState();
-    const navigate = useNavigate();
-    const dispatch=useDispatch();
-    const{register,handleSubmit}=useForm();
-    const logIn = async (data) => {
-        try {
-            console.log(data)
-
-            setError("")
-            const data2 = await appwriteObj.login(data);
-            navigate("/")
-            if (data2) {
-                const getUser = await appwriteObj.getUser();
-                if(getUser){
-                    dispatch(authLogin(getUser))
-                }
-            }
-        }
-        catch (error) {
-            setError(error.message);
+  const [error,setError]=useState("");
+  const navigate=useNavigate();
+  const {register,handleSubmit}=useForm();
+  const dispatch=useDispatch();
+  const authStatus=useSelector((state)=>state.auth.signIn)
+  const loginUser=async(data)=>{
+    try{
+      setError("");
+      const loggedIn=appwriteObj.login(data);
+      navigate('/');
+      if(loggedIn){
+        const userData=await appwriteObj.getUserAccount();
+        console.log('userData',userData)
+        if (userData){
+          
+          dispatch(login(userData))
+          console.log("authStatus after signIn",authStatus);
         }
 
+      }
     }
-    return (
-        <>
-            <div
+    catch(e){
+      setError(e.message)
+    }
+
+  }
+  return (
+    
+    <>
+    <div
                 className='flex items-center justify-center w-full'
             >
                 <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
@@ -53,34 +58,34 @@ function SignIn() {
                             Sign Up
                         </Link>
                     </p>
-                    {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-                    <form onSubmit={handleSubmit(logIn)}>
-                        <Input
-                        label="Email:"
-                        type="email"
-                        placeholder="Enter your email"
-                        {...register("email",{
-                            required:true,
-                            matchPattern:(value)=>{/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)}
-                        })}    />
-                        <Input
-                        type="password"
-                        placeholder="Enter your password"
-                        {...register('password',{
-                            required:true
-                        })}
-                                                
-                        />
-                        <Button type='submit'
-                        children="Sign in"
-                        className='w-full'/>
+    {error && <p className='text-red-500'>{error}</p>}
+    <form onSubmit={handleSubmit(loginUser)}>
 
-                    </form>
-                </div>
-            </div>
- 
-        </>
-    )
+    <Input
+    label="Enter your email"
+    type='text'
+    {...register('email',{
+      required:true,
+      matchPattern:(value)=>{/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)}
+
+    })}
+    
+    />
+    <Input
+    label="Enter your Password"
+    type='password'
+    {...register('password',{
+      required:true
+    })}
+    />
+    <Button type={'submit'}
+    children='Submit'
+    className='mx-10p my-1'/>
+    </form>
+    </div>
+    </div>
+    </>
+  )
 }
 
-export default SignIn;
+export default SignIn

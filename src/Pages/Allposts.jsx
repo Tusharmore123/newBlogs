@@ -1,28 +1,31 @@
-import React,{useState,useEffect}from 'react'
-import { service } from '../../Appwrite/service'
-import Container from '../container/container'
-import PostCard from '../components/PostCard'
-function Allposts() {
-    const [posts,setPost]=useState([])
+import React, { useEffect,useState } from 'react'
+import { service } from '../../Appwrite/service';
+import PostCard from '../Components/PostCard';
+import Container from '../container/Container';
+
+function AllPosts() {
+    const [posts,setPost]=useState([]);
     useEffect(()=>{
-        service.getPosts().then((post)=>{
-            if (post) setPost(post.documents);
-        })
+        (async()=>{
+            const allPosts=await service.getPosts()
+            setPost(allPosts.documents);
+        })()
     },[])
   return (
     <div className='w-full py-8'>
         <Container>
-            <div className='flex flex-wrap'>
-                {posts.map((post) => (
-                    <div key={post.$id} className='p-2 w-1/4'>
-                        <PostCard {...post} />
-                    </div>
-                ))}
-            </div>
-            </Container>
+        <div className='flex flex-wrap'></div>
+        {console.log(posts)}
+        {posts?posts.map((post)=>{
+            return(
+                <div key={post.$id} className='p-2 w-1/4'>
+                <PostCard {...post}/>
+                </div>
+            )
+        }):null}
+        </Container>
     </div>
-    
   )
 }
 
-export default Allposts
+export default AllPosts

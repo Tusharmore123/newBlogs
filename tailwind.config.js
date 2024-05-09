@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
     theme: {
-    extend: {},
+    extend: {
+      margin:{
+        '10p':'35%'
+      },
+    },
   },
   plugins: [],
 }

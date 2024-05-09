@@ -1,38 +1,37 @@
-import React,{useState} from 'react'
-import Input from './Input'
-import {useForm } from'react-hook-form'
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { logIn as authLogin, logIn} from '../store/authSlice'
-import Logo from './logo'
-import { appwriteObj } from '../../Appwrite/auth'
-import {Link,useNavigate} from 'react-router-dom'
-import Button from './Button'
-
+import { appwriteObj } from '../../Appwrite/auth';
+import { login } from '../Store/authSlice';
+import Input  from './Input';
+import Button from './Button';
+import  Logo from './Logo';
+import {Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
-    const[error,setError]=useState("")
-    const dispatch=useDispatch()
-    const navigate=useNavigate()
-    const {register,handleSubmit}=useForm()
-    const signUp=async(data)=>{
-        const dispatch=useDispatch()
-        try{
-            const create=await appwriteObj.createUser(data)
-            console.log(create)
-            if (create){
-            console.log(data);
-            const user=await appwriteObj.getUserAccount();
-            if(user) dispatch(logIn(data));
-            if (user) navigate("/");
+    const{register,handleSubmit}=useForm();
+    const[Error,setError]=useState('');
+    const navigate=useNavigate();
+    const dispatch=useDispatch();
 
+    const signUp=(data)=>{
+        try{
+
+            const user=appwriteObj.createUser(data);
+           
+            if (user){
+                dispatch(login(user));
+                navigate('/');
+            }
+        }
+        catch(error){
+            setError(error.message);
         }
     }
-    catch(error){
-        setError(error.message);
-    }
-
-    }
+    {console.log('Signup')}
   return (
+    <>
     <div className="flex items-center justify-center">
     <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
     <div className="mb-2 flex justify-center">
@@ -50,19 +49,15 @@ function SignUp() {
                 Sign In
             </Link>
         </p>
-        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-        <form onSubmit={handleSubmit(signUp)}>
-            <Input
-            placeholder="Enter your name"
-            label="name"
-            
-            {...register("name",{
-                required:true
-            })}
-            
-            
-            />
-            <Input
+    {Error && <p className='text-red-500'>{Error}</p>}
+    <form onSubmit={handleSubmit(signUp)}>
+        <Input
+        type='text'
+        label='Enter your Name'
+        {...register('name',{
+            required:true
+        })}/>
+        <Input
             type="email"
             label="Email"
             placeholder="Enter your email"
@@ -70,32 +65,27 @@ function SignUp() {
                 required:true,
                 matchPattern:(value)=>{/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)}
             })}
+            />
+        <Input
+        type='password'
+        label='Password'
+        {...register('password',{
+            required:true,
             
-            />
-            <Input
-            type="password"
-            label="password"
-            placeholder="Enter your password"
-            {
-                ...register('password',{
-                    required:true
-                })
-            }
-            />
-
-
+        })}
+        />
         <Button
-        className='w-full'
-        type='submit'
-        children="Submit"/>
-        </form>
-        </div>
+        type={'submit'}
+        children='Submit'
+        />
+            
 
-        </div>
-    
-
-
+        
+    </form>
+    </div>
+    </div>
+    </>
   )
 }
 
-export { SignUp}
+export default SignUp

@@ -1,13 +1,14 @@
-import {SignUp as SignUpPage} from '../components/SignUp'
 import React from 'react'
+import SignUp from '../Components/SignUp'
 
-function SignUp() {
+function Signup() {
   return (
+    <>
     <div className='py-8'>
-
-    <SignUpPage/>
+        <SignUp/>
     </div>
+    </>
   )
 }
 
-export default SignUp
+export default Signup

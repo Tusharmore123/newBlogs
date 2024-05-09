@@ -18,10 +18,10 @@ class Service{
         
         
     }
-    async createNewPost({featuredImage,status,title,content,slug,userId}){
+    async createNewPost({image,status,title,content,slug,userId}){
         try {
             const newPost=await  this.databases.createDocument(conf.database_id, conf.collection_id, slug, {
-                featuredImage,status,title,content,userId
+                image,status,title,content,userId
             });
             return newPost;
         } catch (error) {
@@ -29,10 +29,10 @@ class Service{
         }
 
     }
-    async updatePost(slug,{featuredImages,status,title,content,userId}){
+    async updatePost(slug,{image,status,title,content,userId}){
         
         try {
-            const post=await this.databases.updateDocument(conf.database_id,conf.collection_id,slug,{featuredImages,status,title,content,userId});
+            const post=await this.databases.updateDocument(conf.database_id,conf.collection_id,slug,{image,status,title,content,userId});
             if(post){
                 return post;
             }
@@ -49,9 +49,9 @@ class Service{
         }
     }
         
-    async getPost({slug}){
+    async getPost(slug){
         try {
-            console.log(slug);
+            
             return await this.databases.getDocument(
                 conf.database_id,
                 conf.collection_id,
@@ -96,9 +96,10 @@ class Service{
             )
             return true
         } catch (error) {
-            console.log("Error while deleting File")
+            console.log("Error while deleting File",error)
         }
     }
+
     getPreview(fileId){
         try {
             return  this.storage.getFilePreview(conf.bucket_id, fileId);
