@@ -11,10 +11,10 @@ function Select({
     <>
     {label && <label htmlFor='label'>{label}</label>}
       
-    <select {...props}>
+    <select {...props} className={`${className}`}>
     {
         options?options.map((option)=>(
-            <option className=' ' key={option} value={option}>
+            <option className={`${className}`} key={option} value={option}>
               
                 {option}
             </option>

@@ -13,7 +13,7 @@ function PostCard({$id,image,title}) {
 
             </div>
             <h2
-            className='text-xl font-bold'
+            className=' xs:text-sm md:text-xl  font-bold dl:text-xs'
             >{title}</h2>
         </div>
     </Link>

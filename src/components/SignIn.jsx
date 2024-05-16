@@ -64,9 +64,11 @@ function SignIn() {
     <Input
     label="Enter your email"
     type='text'
+    className='xs:text-sm md:text-lg'
     {...register('email',{
       required:true,
       matchPattern:(value)=>{/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)}
+      
 
     })}
     
@@ -80,7 +82,7 @@ function SignIn() {
     />
     <Button type={'submit'}
     children='Submit'
-    className='mx-10p my-1'/>
+    className='mx-10p my-1 dl:w-full dl:mx-0 md:mx-10p md:w-1/3'/>
     </form>
     </div>
     </div>

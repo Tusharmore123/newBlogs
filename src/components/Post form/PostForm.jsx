@@ -78,8 +78,13 @@ function PostForm({ post }) {
     }, [watch, setValue, slugifyForm,post])
     return (
         <>
-    <div className="w-2/3 px-2">
-         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+    <div className="w-full px-2 justify-center flex">
+        
+
+         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap w-1/2  dl:w-full sm:w-1/2
+         ">
+            
+
              <Input
                 type='text'
                 label='title of the Posts'
@@ -87,7 +92,7 @@ function PostForm({ post }) {
                 {...register('title', {
                     required: true
                 })}
-            />
+                />
             
             <Input
                 type='text'
@@ -95,49 +100,52 @@ function PostForm({ post }) {
                 placeholder='slug'
                 {...register('slug', {
                     required: true,
-
+                    
                 })}
                 onInput={(e) => {
                     setValue('slug', slugifyForm(e.target.value), { shouldValidate: true })
                 }}
-            />
+                />
             
             <RTE
                 label='content:'
                 name='content'
                 control={control}
                 defaultValue={getValues("content")}
-            />
-            <div className="w-1/3 px-2">
+                />
+            <div className="w-1/2 px-2 dl:w-full md:w-1/2">
             <Input
             label="Featured Image :"
             type="file"
             className="mb-4"
             accept="image/png, image/jpg, image/jpeg, image/gif"
             {...register("image", { required: !post })}
-        />
+            />
             </div>
              {post && (
-                <div className="w-full mb-4">
+                 <div className="w-full mb-4">
                     <img
                         src={service.getPreview(post.image)}
                         alt={post.title}
                         className="rounded-lg"
-                    />
+                        />
                 </div>
             )} 
                  <Select
+                    className=' border-2  border-grey-100 mx-1 rounded-lg'
                     options={["active", "inactive"]}
                     label="Status"
-                    className="mb-4"
+                    
                     {...register("status", { required: true })}
                     
-                />
-            <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
+                    />
+            <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full rounded my-1">
                 {post ? "Update" : "Submit"}
             </Button> 
+                    
             </form>
-            </div>
+        </div>
+           
         </>
 
     )

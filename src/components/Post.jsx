@@ -43,37 +43,40 @@ function Post() {
                 navigate('/')
             }})
         }
-        return posts?(<div className="py-8">
+        return posts?(<div className="py-8 ">
         <Container>
-            <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+            <div className="w-1/3 flex justify-center mb-4   mr-20 relative border rounded-xl p-2">
                 {console.log('post image',posts.image,posts)}
                 <img
                     src={service.getPreview(posts.image)}
                     alt={posts.title}
-                    className="rounded-xl"
+                    className="rounded-xl dl:w-full xs:w-1/2 md:w-full"
                 />
-
+                <br/>
+                
+            </div>
+            <div className="md:w-1/2 mb-6 dl:w-full">
+                <h1 className="md:text-2xl sm:text-xl dl-text-lg font-bold">{posts.title}</h1>
+            
+            <div className="browser-css">
+                {posts.content?parse(posts.content):null}
+                </div>
+            </div>
+            
+        </Container>
                 {isAuth && (
-                    <div className="absolute right-6 top-6">
+                    <div className=" w-full flex justify-center dl:flex-col xs:flex-row gap-1 ">
                         {console.log(posts)}
                         <Link to={`/edit-post/${posts.$id}`}>
-                            <Button bgColor="bg-green-500" className="mr-3">
+                            <Button bgColor="bg-green-500" className="mr-3 text-black dl:h-10 dl:w-full xs:w-32 text-center">
                                 Edit
                             </Button>
                         </Link>
-                        <Button bgColor="bg-red-500" onClick={deletePost} >
+                        <Button bgColor="bg-red-500 " className='text-black dl:h-10 dl:w-full xs:w-32 text-center' onClick={deletePost} >
                            Delete
                         </Button>
                     </div>
                 )}
-            </div>
-            <div className="w-full mb-6">
-                <h1 className="text-2xl font-bold">{posts.title}</h1>
-            </div>
-            <div className="browser-css">
-                {posts.content?parse(posts.content):null}
-                </div>
-        </Container>
     </div>
     ):null;
   
