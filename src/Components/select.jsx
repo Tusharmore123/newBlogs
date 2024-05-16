@@ -14,7 +14,7 @@ function Select({
     <select {...props} className={`${className}`}>
     {
         options?options.map((option)=>(
-            <option className={`${className}`} key={option} value={option}>
+            <option  key={option} value={option}>
               
                 {option}
             </option>

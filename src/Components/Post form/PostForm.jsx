@@ -132,7 +132,8 @@ function PostForm({ post }) {
                 </div>
             )} 
                  <Select
-                    className=' border-2  border-grey-100 mx-1 rounded-lg'
+                    className=' border-2  border-grey-100 mx-1 rounded-lg h-10 my-7
+                    dl:w-full md:w-1/3'
                     options={["active", "inactive"]}
                     label="Status"
                     
